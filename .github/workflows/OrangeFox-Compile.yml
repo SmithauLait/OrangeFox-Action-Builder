@@ -97,8 +97,8 @@ jobs:
         cd ${GITHUB_WORKSPACE}/OrangeFox/fox_${{ github.event.inputs.MANIFEST_BRANCH }}
         git clone ${{ github.event.inputs.DEVICE_TREE }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
         curl -LSs https://gist.github.com/cachiusa/112d89e2abac7e33c87948ff44406a31/raw -o lzma.sh
-        chmod +x lzma.sh
-        sed -i '/# clean up, with success code/a cd $ANDROID_BUILD_TOP && ./lzma.sh $ZIP_FILE' vendor/recovery/OrangeFox_A12.sh
+        wget https://github.com/topjohnwu/Magisk/releases/download/v27.0/Magisk-v27.0.apk
+        sed -i '/# clean up, with success code/a cd $ANDROID_BUILD_TOP && bash lzma.sh $ZIP_FILE' vendor/recovery/OrangeFox_A12.sh
         cd ${{ github.event.inputs.DEVICE_PATH }}
         echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
@@ -113,6 +113,7 @@ jobs:
         fi
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
+        export FOX_USE_SPECIFIC_MAGISK_ZIP=$(gettop)/Magisk-v27.0.apk
         lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && mka adbd vendorbootimage
         export TW_VNDR_BOOT=0
         source build/envsetup.sh
