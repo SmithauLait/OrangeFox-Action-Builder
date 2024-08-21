@@ -112,6 +112,7 @@ jobs:
         sed -i 's/return sandboxConfig\.working/return false/g' build/soong/ui/build/sandbox_linux.go
         fi
         source build/envsetup.sh
+        sed -i '$ a CONFIG_KSU=y' kernel/xiaomi/sm6375/arch/arm64/configs/veux_defconfig
         export ALLOW_MISSING_DEPENDENCIES=true
         export FOX_USE_SPECIFIC_MAGISK_ZIP=$(gettop)/Magisk-v27.0.apk
         lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && mka adbd vendorbootimage
