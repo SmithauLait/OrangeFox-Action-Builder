@@ -116,7 +116,7 @@ jobs:
         export ALLOW_MISSING_DEPENDENCIES=true
         export FOX_USE_SPECIFIC_MAGISK_ZIP=$(gettop)/Magisk-v27.0.apk
         lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && mka adbd vendorbootimage
-        export TW_VNDR_BOOT=0
+        export TWRP_BUILD_BOOT_IMAGE=1
         source build/envsetup.sh
         lunch twrp_veux-eng && mka adbd bootimage
 
